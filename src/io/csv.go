@@ -1,8 +1,9 @@
-package mst_util
+package mst_io
 
 import (
 	"bufio"
 	"fmt"
+	mu "minimum_spanning_tree/mst_util"
 	st "minimum_spanning_tree/structure"
 	"os"
 	"strconv"
@@ -28,6 +29,8 @@ func Adjacency_structure_graph_from_csv(nodes_file_path, edges_file_path string)
 	}
 	defer edges_file.Close()
 	edges_scanner := bufio.NewScanner(edges_file)
+	edges := Read_edges(edges_scanner, nodes)
+	return st.Adjacency_structure_graph_from_edges(len(nodes), edges)
 }
 
 func Read_nodes(scanner *bufio.Scanner) []Vertex {
@@ -46,6 +49,28 @@ func Read_nodes(scanner *bufio.Scanner) []Vertex {
 			fmt.Println("Error parsing nodes file: ", err)
 		}
 		result = append(result, Vertex{X: x, Y: y})
+	}
+	return result
+}
+
+func Read_edges(scanner *bufio.Scanner, nodes []Vertex) []st.Edge {
+	result := []st.Edge{}
+	scanner.Scan()
+	for scanner.Scan() {
+		line := scanner.Text()
+		line_split := strings.Split(line, ",")
+		str_v, str_w := line_split[0], line_split[1]
+		v, err := strconv.Atoi(str_v)
+		if err != nil {
+			fmt.Println("Error parsing edges file: ", err)
+		}
+		w, err := strconv.Atoi(str_w)
+		if err != nil {
+			fmt.Println("Error parsing edges file: ", err)
+		}
+		xv, yv, xw, yw := nodes[v-1].X, nodes[v-1].Y, nodes[w-1].X, nodes[w-1].Y
+		e := st.Edge{V: st.Vertex(v), W: st.Vertex(w), Weight: st.Weight(mu.Distance_2D_float64(xv, yv, xw, yw))}
+		result = append(result, e)
 	}
 	return result
 }
