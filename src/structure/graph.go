@@ -41,13 +41,17 @@ func (v_list *Vertex_linked_list) Set_next(next mu.Linked_list[Vertex, Weight]) 
 	}
 }
 
-type Adjacency_structure []Vertex_list
+type Adjacency_structure struct {
+	N         int
+	Edges     []Edge
+	Structure []Vertex_list
+}
 
 func (s Adjacency_structure) Get_adjacent_list(v Vertex) Vertex_list {
-	if int(v) > len(s) {
+	if int(v) > len(s.Structure) {
 		return nil
 	} else {
-		return s[int(v-1)]
+		return s.Structure[int(v-1)]
 	}
 }
 
@@ -65,12 +69,13 @@ func New_edge(v, w int32, weight float64) Edge {
 }
 
 func (s *Adjacency_structure) Add_edge(e Edge) {
-	(*s)[e.V-1] = mu.LL_insert((*s)[e.V-1], &Vertex_linked_list{V: e.W, Weight: e.Weight})
-	(*s)[e.W-1] = mu.LL_insert((*s)[e.W-1], &Vertex_linked_list{V: e.V, Weight: e.Weight})
+	s.Structure[e.V-1] = mu.LL_insert(s.Structure[e.V-1], &Vertex_linked_list{V: e.W, Weight: e.Weight})
+	s.Structure[e.W-1] = mu.LL_insert(s.Structure[e.W-1], &Vertex_linked_list{V: e.V, Weight: e.Weight})
 }
 
 func Adjacency_structure_graph_from_edges(n int, edges []Edge) Graph {
-	result := make(Adjacency_structure, n)
+	structure := make([]Vertex_list, n)
+	result := Adjacency_structure{N: n, Edges: edges, Structure: structure}
 	for _, e := range edges {
 		result.Add_edge(e)
 	}
