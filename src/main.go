@@ -16,7 +16,7 @@ func main() {
 	/*
 		Tratamento de flags de entrada
 
-		go run main.go <algo-flag> [graph-id]
+		go run main.go <algo-flag> [arquivo de vertices] [arquivo de arestas]
 
 		<algo-flag>
 		-kt : para o algoritmo de Kruskal com Tree Set Familly
@@ -24,10 +24,8 @@ func main() {
 		-pm : para o algoritmo de Prim com Heap mínima
 	*/
 	algo_flag := os.Args[1]
-	graph_id := os.Args[2]
-
-	nodesFile := fmt.Sprintf("testes/Grafo%v/Nodes%v.csv", graph_id, graph_id)
-	edgesFile := fmt.Sprintf("testes/Grafo%v/Edges%v.csv", graph_id, graph_id)
+	nodesFile := os.Args[2]
+	edgesFile := os.Args[3]
 
 	var g st.Graph = mst_io.Adjacency_structure_graph_from_csv(nodesFile, edgesFile)
 
@@ -72,13 +70,12 @@ func main() {
 	}
 
 	// exibimos os resultados no terminal
-	fmt.Printf("\nTestes para o Grafo %v - %v\n", graph_id, algo)
+	fmt.Printf("\nTestes - %v\n", algo)
 	fmt.Println("----------------------------------------------")
 	fmt.Printf("Numero de Vertices : %v\n", tamanho)
 	fmt.Println("----------------------------------------------")
 	fmt.Printf("\nPeso total MST        | %.7f\n", total_weight)
 	fmt.Printf("Tempo (s)             | %.7f s\n", duration.Seconds())
-	fmt.Printf("Memória usada         | %.7f MB\n", float64(mEnd.Alloc-mStart.Alloc)/(1024*1024))
 	fmt.Printf("Memória total alocada | %.7f MB\n", float64(mEnd.TotalAlloc-mStart.TotalAlloc)/(1024*1024))
 	fmt.Printf("Pico de memória (Sys) | %.7f MB\n", float64(mEnd.Sys)/(1024*1024))
 }

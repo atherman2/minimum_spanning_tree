@@ -5,30 +5,6 @@ import (
 	st "minimum_spanning_tree/structure"
 )
 
-// Item da fila de prioridade
-type EdgeItem struct {
-	edge st.Edge
-}
-
-type PriorityQueue []EdgeItem
-
-func (pq PriorityQueue) Len() int { return len(pq) }
-func (pq PriorityQueue) Less(i, j int) bool {
-	return pq[i].edge.Weight < pq[j].edge.Weight
-}
-func (pq PriorityQueue) Swap(i, j int) { pq[i], pq[j] = pq[j], pq[i] }
-
-func (pq *PriorityQueue) Push(x interface{}) {
-	*pq = append(*pq, x.(EdgeItem))
-}
-func (pq *PriorityQueue) Pop() interface{} {
-	old := *pq
-	n := len(old)
-	item := old[n-1]
-	*pq = old[:n-1]
-	return item
-}
-
 // Algoritmo de Prim
 func Core_prim(g st.Graph, start st.Vertex) (st.Graph, st.Weight) {
 	n := g.Get_n()
@@ -42,21 +18,21 @@ func Core_prim(g st.Graph, start st.Vertex) (st.Graph, st.Weight) {
 		Structure: make([]st.Vertex_list, n),
 	}
 
-	pq := &PriorityQueue{}
+	pq := &st.PriorityQueue{}
 	heap.Init(pq)
 
 	// começa pelo vértice inicial
 	visited[start] = true
 	adj := g.Get_adjacent_list(start)
 	for adj != nil {
-		heap.Push(pq, EdgeItem{edge: st.Edge{V: start, W: adj.Key(), Weight: adj.Data()}})
+		heap.Push(pq, st.EdgeItem{Edge: st.Edge{V: start, W: adj.Key(), Weight: adj.Data()}})
 		adj = adj.Next_list()
 	}
 
 	// enquanto houver arestas na fila
 	for pq.Len() > 0 {
-		item := heap.Pop(pq).(EdgeItem)
-		e := item.edge
+		item := heap.Pop(pq).(st.EdgeItem)
+		e := item.Edge
 
 		if visited[e.W] {
 			continue
@@ -72,7 +48,7 @@ func Core_prim(g st.Graph, start st.Vertex) (st.Graph, st.Weight) {
 		adj := g.Get_adjacent_list(e.W)
 		for adj != nil {
 			if !visited[adj.Key()] {
-				heap.Push(pq, EdgeItem{edge: st.Edge{V: e.W, W: adj.Key(), Weight: adj.Data()}})
+				heap.Push(pq, st.EdgeItem{Edge: st.Edge{V: e.W, W: adj.Key(), Weight: adj.Data()}})
 			}
 			adj = adj.Next_list()
 		}

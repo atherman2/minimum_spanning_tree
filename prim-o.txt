@@ -15,4 +15,6 @@ func Prim(grafo st.Graph) (st.Graph, st.Weight) {
 	estrutura := make([]st.Vertex_list, numNos)
 	arvoreGeradoraMinima := st.Adjacency_structure{N: numNos, Edges: []st.Edge{}, Structure: estrutura}
 
+	// copiamos as arestas 
+
 }
