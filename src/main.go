@@ -2,34 +2,16 @@ package main
 
 import (
 	"fmt"
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-	mu "minimum_spanning_tree/mst_util"
-=======
-	alg "minimum_spanning_tree/algorithms"
-	mst_io "minimum_spanning_tree/io"
->>>>>>> Stashed changes
-	st "minimum_spanning_tree/structure"
-=======
 	alg "minimum_spanning_tree/algorithms"
 	mst_io "minimum_spanning_tree/io"
 	st "minimum_spanning_tree/structure"
 	"os"
 	"runtime"
 	"time"
->>>>>>> Stashed changes
 )
 
 func main() {
 	fmt.Println("this is minimum_spanning_tree source code main file")
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-	var v_list st.Vertex_list = &st.Vertex_linked_list{V: st.Vertex(1), Next: nil, Weight: st.Weight(1)}
-	fmt.Println(mu.Search(v_list, st.Vertex(1)))
-	fmt.Println(mu.Search(v_list, st.Vertex(2)))
-=======
-=======
->>>>>>> Stashed changes
 
 	/*
 		Tratamento de flags de entrada
@@ -99,8 +81,4 @@ func main() {
 	fmt.Printf("Memória usada         | %.7f MB\n", float64(mEnd.Alloc-mStart.Alloc)/(1024*1024))
 	fmt.Printf("Memória total alocada | %.7f MB\n", float64(mEnd.TotalAlloc-mStart.TotalAlloc)/(1024*1024))
 	fmt.Printf("Pico de memória (Sys) | %.7f MB\n", float64(mEnd.Sys)/(1024*1024))
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 }
