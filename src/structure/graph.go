@@ -6,6 +6,8 @@ type Graph interface {
 	Get_adjacent_list(v Vertex) Vertex_list
 	Get_edge(v, w Vertex) Vertex_list
 	Add_edge(e Edge)
+	Get_n() int
+	Get_edges() []Edge
 }
 
 type Vertex uint32
@@ -57,6 +59,14 @@ func (s Adjacency_structure) Get_adjacent_list(v Vertex) Vertex_list {
 
 func (s Adjacency_structure) Get_edge(v, w Vertex) Vertex_list {
 	return mu.Search(s.Get_adjacent_list(v), w)
+}
+
+func (s Adjacency_structure) Get_n() int {
+	return s.N
+}
+
+func (s Adjacency_structure) Get_edges() []Edge {
+	return s.Edges
 }
 
 type Edge struct {
