@@ -1,0 +1,18 @@
+package algorithms
+
+import (
+	st "minimum_spanning_tree/structure"
+)
+
+// Entrada : Grafo
+// Saída : Árvore Geradora Mínima (grafo) + peso total
+func Prim(grafo st.Graph) (st.Graph, st.Weight) {
+	// inicializamos o peso total
+	pesoTotal := st.Weight(0.0)
+
+	// criamos a arvore geradora mínima inicialmente vazia
+	numNos := grafo.Get_n() // número de nós do grafo de entrada
+	estrutura := make([]st.Vertex_list, numNos)
+	arvoreGeradoraMinima := st.Adjacency_structure{N: numNos, Edges: []st.Edge{}, Structure: estrutura}
+
+}
